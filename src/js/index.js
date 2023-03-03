@@ -51,13 +51,6 @@ export function local_position(position) {
   }
 }
 
-initalSetting()
-
-function initalSetting() {
-  document.getElementById('map_identifier').innerText =
-    'MAIN map : you cannot fight here!'
-}
-
 // make other charaters or objects.
 var resume_data = sessionStorage.getItem('resume-data')
 if (resume_data !== null) {

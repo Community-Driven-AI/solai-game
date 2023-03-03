@@ -6,21 +6,20 @@ import { adjustMapPosition, background, foreground } from '../control/map'
 import { battle } from '../battle/battleClient'
 import { safe_send } from '../network/websocket'
 import axios from 'axios'
-import { movePlayerToPosition, moveUser, stopUser } from '../control/move'
 
 const clothStorageLink = 'https://web3mon.s3.amazonaws.com/nftv1/'
 
 export const worker = new Worker('./worker.js')
 
 const chatBubble = new Image()
-chatBubble.src = './../img/chatBubble2.png'
+chatBubble.src = './../img/chatBubble.png'
 
 export let player
 
 export function setPlayer(a) {
   player = a
 }
-export let myID
+export let myID = 'myID'
 export const users = {}
 
 const terraLogo = new Image()
@@ -50,7 +49,6 @@ worker.onmessage = function (event) {
   users[user_id].setSpriteImages('right', event.data.right)
   users[user_id].setSpriteImages('base', event.data.base)
   users[user_id].setDirection('down')
-  users[user_id].made = true
 
   var resume_data = sessionStorage.getItem('resume-data')
   if (resume_data !== null) {
@@ -79,33 +77,16 @@ worker.onerror = function (err) {
 export class User {
   id
   name
-  nftCollection
-  tokenId
-  chain
   sprite
   spriteImgs
-  nftUrl
   targetPosition
   position
   map
   moving
   chat
   chatShowTime
-  clothId
-  readyForBattle
-  made
 
-  constructor(
-    id,
-    nftCollection,
-    tokenId,
-    chain,
-    nftUrl,
-    clothId,
-    map,
-    coordinate
-  ) {
-    console.log(clothId)
+  constructor(id, map, name, coordinate) {
     if (id === myID) {
       player = this
     }
@@ -118,18 +99,9 @@ export class User {
     this.targetPosition = this.position
 
     this.id = id
-    this.nftCollection = nftCollection
-    this.tokenId = tokenId
-    this.chain = chain
-    this.nftUrl = nftUrl
-    this.clothId = clothId
     this.map = map
 
-    if (nftCollection === 'asac.web3mon.testnet') nftCollection = 'ASAC'
-    else if (nftCollection === 'nearnauts.web3mon.testnet')
-      nftCollection = 'Nearnauts'
-
-    this.name = `${nftCollection} #${tokenId}`
+    this.name = name
 
     this.sprite = new Sprite({
       position: this.position,
@@ -143,23 +115,10 @@ export class User {
       down: new Image(),
       left: new Image(),
       right: new Image(),
-      base: new Image(),
     }
     this.moving = false
     this.chat = ''
     this.chatShowTime = 0
-    this.readyForBattle = false
-    this.made = false
-
-    worker.postMessage({
-      id: id,
-      url: nftUrl,
-      leftSource: clothStorageLink + this.clothId + '/left.png',
-      rightSource: clothStorageLink + this.clothId + '/right.png',
-      downSource: clothStorageLink + this.clothId + '/down.png',
-      upSource: clothStorageLink + this.clothId + '/up.png',
-      contractAddress: nftCollection,
-    })
   }
 
   setSpriteImages(direction, imageSrc) {
@@ -215,7 +174,7 @@ export class User {
 
   draw(passedTime) {
     if (this.id !== myID) {
-      var moveDistance = 0.2 * passedTime
+      var moveDistance = 0.4 * passedTime
 
       var moveInX = this.targetPosition.x - this.position.x
       var moveInY = this.targetPosition.y - this.position.y

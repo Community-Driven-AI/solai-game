@@ -12,14 +12,13 @@ class MultiWallet {
       createAccessKeyFor: 'web3mon.testnet',
       network: 'testnet',
     })
-    this.wallets['terra'] = new TerraWallet()
-    this.wallets['polygon'] = new PolygonWallet()
   }
 
   startUp() {
-    this.wallets['NEAR'].startUp()
-    this.wallets['terra'].startUp()
-    this.wallets['polygon'].startUp()
+    document.querySelector('#start_login_button').removeAttribute('disabled')
+    document.querySelector('#enterBtn').style.display = 'block'
+
+    // this.wallets['NEAR'].startUp()
   }
 
   getAccountId() {

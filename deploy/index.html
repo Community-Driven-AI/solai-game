@@ -98,9 +98,6 @@
         </div>
         <div id="buttonSection">
           <div class="game_button_container">
-            <div id="map_identifier" style="color: red; font-size: x-large">
-              Clear
-            </div>
           </div>
           <div class="game_button_container">
             <button
@@ -132,28 +129,6 @@
               class="nes-btn"
             >
               Leave Game
-              <span class="bg" />
-            </button>
-          </div>
-          <div class="game_button_container">
-            <button
-              class="custom_button_1"
-              id="battleHistoryBtn"
-              type="button"
-              class="nes-btn"
-            >
-              Battle History
-              <span class="bg" />
-            </button>
-          </div>
-          <div class="game_button_container" id="readyButtonContainer">
-            <button
-              class="custom_button_1"
-              id="readyButton"
-              type="button"
-              class="nes-btn"
-            >
-              Get Ready
               <span class="bg" />
             </button>
           </div>
@@ -216,6 +191,21 @@
 
         <!-- Battle Squence 1 : Choose fight or not -->
         <div id="battleCard" class="battle_modal"></div>
+        <div id="endTrainCard" class="battle_modal"><p>Train Done!</p></div>
+        <div id="drop_modal" class="battle_modal">
+          <p>
+            The Solana Community is building an AI Model using private Health
+            Data!
+          </p>
+          <p>Tower will be upgraded as the model improves.</p>
+          <p>-----------------------------------------></p>
+          <img src="./img/new_tower.png" />
+          <p>Drag and Drop your Health Data file to this <i>drop zone</i>.</p>
+          <div id="drop_zone"></div>
+          <button id="trainBtn" class="guideBtn">Train My Model</button>
+          <button id="closeCardBtn" class="guideBtn">Close</button>
+          <p id="trainText" style="display: none">Training...</p>
+        </div>
         <!-- Battle Squence 2 : Choose your skill -->
         <div id="skill_box_temp" class="battle_modal">
           <p class="title">Selections</p>
@@ -233,7 +223,7 @@
           <button id="closeResultBtn" class="nes-btn">YES</button>
         </div>
 
-        <div id="battlePopUpCard" class="card" style="z-index: 150;">
+        <div id="battlePopUpCard" class="card" style="z-index: 150">
           <h2 id="actionContent"></h2>
         </div>
 
@@ -311,7 +301,7 @@
           <button id="notResumeButton" class="web_custom_button">No</button>
         </div>
         <div class="app_bar">
-          <img class="logo" src="./img/w3mlogonew.png" />
+          <img class="logo" src="./img/solai-logo.png" />
           <div class="icons">
             <a href="http://discord.gg/jwfpBe7qbU"
               ><img class="discord" src="./img/main/discord.png"
@@ -324,9 +314,10 @@
         <div class="login_main_container">
           <div class="main_box">
             <div class="connect_text">
-              Welcome to Web3Mon
+              Welcome to SolAI
               <br />
-              Please Connect Your Wallet to start Playing!
+              Please Connect Your Wallet and commit in building Community Driven
+              AI!
             </div>
             <button id="start_login_button" class="web_custom_button" disabled>
               Start Now
@@ -345,23 +336,8 @@
               <div class="connect_text">Connect Your Wallet</div>
               <div class="chain_containers">
                 <div class="one_chain">
+                  <img class="logo" src="./img/main/solana.png" />
                   <div class="list" id="nearWallets"></div>
-                  <img class="logo" src="./img/main/near.png" />
-                </div>
-                <div class="one_chain">
-                  <div class="list" id="terraWallets"></div>
-                  <img class="logo" src="./img/main/terra.png" />
-                </div>
-                <div class="one_chain">
-                  <div class="list">
-                    <button id="metamaskBtn" class="one_collection" value="near-punks.near">
-                      <div class="img_outer">
-                        <img src="./img/main/metamask.png" />
-                      </div>
-                      <div class="collection_name">Metamask</div>
-                    </button>
-                  </div>
-                  <img class="logo" src="./img/main/monochrome.png" />
                 </div>
               </div>
               <div class="input_container">
@@ -376,12 +352,12 @@
                   Sign Out
                 </button>
                 <button
-                  id="find_my_nft"
+                  id="enterBtn"
                   type="button"
                   class="web_custom_button"
                   style="margin: 0px; margin-left: 10px; display: none"
                 >
-                  Find My NFT
+                  Enter
                 </button>
               </div>
             </div>

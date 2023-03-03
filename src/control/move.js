@@ -9,6 +9,7 @@ import { movables } from '../js/renderables'
 import { users, myID, player } from '../user/user'
 import { allowedBlocks } from '../data/collisions'
 import { portals } from '../data/portals'
+import { fixedObjects } from '../object/FixedObject'
 
 export let lastKey = ''
 
@@ -134,7 +135,7 @@ function moveUser(position) {
   ws.send(msg)
 }
 
-const speed = 0.2
+const speed = 0.3
 export function moveToXDirection(direction, num = 1, passedTime) {
   var moving = true
   const plusOrNot = (direction === 'up') | (direction === 'left') ? 1 : -1
@@ -153,6 +154,23 @@ export function moveToXDirection(direction, num = 1, passedTime) {
     y: deltaY,
   })
 
+  var distance = distancePowerofTwo(
+    fixedObjects['tower'].position,
+    player.position
+  )
+
+  if (distance < 50000) {
+    fixedObjects['tower'].msgs = [
+      'Training by Community...',
+      'Click Me For More Info',
+    ]
+    fixedObjects['tower'].clickable = true
+  } else {
+    fixedObjects['tower'].clickable = false
+    fixedObjects['tower'].msgs = ['Come Closer!']
+    fixedObjects['tower'].msg_index = 0
+  }
+
   // collision check
   if (allowedBlocks[player.map][myBlock[0]][myBlock[1]] === 'X') moving = false
   var portal = portals[player.map][myBlock[0]][myBlock[1]]
@@ -170,19 +188,5 @@ export function moveToXDirection(direction, num = 1, passedTime) {
       true
     )
     adjustMapPosition()
-    // movePlayerToPosition(deltaX, deltaY, true)
   }
-}
-
-export function movePlayerToPosition(x, y, relative) {
-  var deltaX, deltaY
-  if (relative) {
-    deltaX = x
-    deltaY = y
-  } else {
-    deltaX = player.position.x - x
-    deltaY = player.position.y - y
-  }
-  background.position.x += deltaX
-  background.position.y += deltaY
 }

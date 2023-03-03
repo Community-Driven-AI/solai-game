@@ -10,6 +10,25 @@
   color: rgba(242, 242, 242, 0.93);
 }
 
+#drop_modal {
+  width: 500px;
+  height: 500px;
+  left: calc(50% - 250px);
+
+  #drop_zone {
+    width: 400px;
+    height: 200px;
+    background-color: rgba(242, 242, 242, 0.93);
+    color: black;
+  }
+}
+
+#endTrainCard {
+  width: 200px;
+  height: 100px;
+  left: calc(50% - 150px);
+}
+
 .battleCard {
   color: rgba(242, 242, 242, 0.93);
   // width: 400px;

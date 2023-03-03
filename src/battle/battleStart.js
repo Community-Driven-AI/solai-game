@@ -1,36 +1,18 @@
 import { canvas, stopAllPlay } from '../js/index'
 import { battle } from './battleClient'
 import { myID, users, player } from '../user/user'
+import { fixedObjects } from '../object/FixedObject'
 
 /**
  * check whether click another player to battle.
  */
 export function clickEvent() {
-  canvas.addEventListener('click', (e) => {
-    // need to be ready and not currently battling and in BATTLE map
-    if (battle.started) return
-    if (stopAllPlay) return
-    // I should be ready
-    // if (!player.readyForBattle) return
-    for (const key in users) {
-      if (key === myID) continue
-      var x = e.offsetX - users[key].sprite.width / 2
-      var y = e.offsetY - users[key].sprite.height / 2
-      // 상대방을 클릭한지에 대한 체크
-      if (
-        Math.abs(users[key].sprite.position.x - x) <
-          users[key].sprite.width / 2 &&
-        Math.abs(users[key].sprite.position.y - y) <
-          users[key].sprite.height / 2
-      ) {
-        // opponent should be ready
-        // if (!users[key].readyForBattle) break
-        if (player.map === 'MAIN') {
-          window.alert('MAIN MAP is not for BATTLE.')
-          return
+  canvas.addEventListener('click', (ev) => {
+    for (const key in fixedObjects) {
+      if (fixedObjects[key].checkClick(ev)) {
+        if (key === 'tower') {
+          document.getElementById('drop_modal').style.display = 'block'
         }
-        setUpBattleCard('request', key, null)
-        break
       }
     }
   })

@@ -59,7 +59,7 @@ export class NearWallet {
       this.accountId =
         this.walletSelector.store.getState().accounts[0].accountId
       wallet.selectedChain = 'NEAR'
-      document.querySelector('#find_my_nft').style.display = 'block'
+      document.querySelector('#enterBtn').style.display = 'block'
       document.querySelector('#sign_out').style.display = 'block'
       wallet.signIn()
     }

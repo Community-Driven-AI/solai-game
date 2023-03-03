@@ -1,5 +1,8 @@
 import { wallet } from '../wallet/multi-wallet'
 import { connect } from '../network/websocket'
+import { User, users } from './user'
+import { adjustMapPosition, transferMapTo } from '../control/map'
+import { animate } from '../animate'
 
 export let playerUrl
 export let tokenId
@@ -27,32 +30,8 @@ export function setClothId(id) {
 }
 
 export const login = async () => {
-  if (tokenId === undefined) {
-    window.alert('Please Choose NFT to use')
-    return
-  }
-  if (selectedClothId === undefined) {
-    window.alert('Please Choose Cloth to wear')
-    return
-  }
-  var verified = await wallet.verifyOwner(collection, tokenId, selectedClothId)
-  if (!verified) {
-    window.alert('Owner Verification Fail')
-    return
-  }
   document.getElementById('chatOpenBtn').style.display = 'block'
-  document.getElementById('profileImg').src = playerUrl
-  if (wallet.selectedChain === 'NEAR') {
-    document.getElementById('parasUrl').addEventListener('click', (e) => {
-      window
-        .open(
-          `https://paras.id/token/${window.contract.contractId}::${window.tokenId}/${window.tokenId}`,
-          '_blank'
-        )
-        .focus()
-    })
-  }
-  connect()
+  turnToGameScreen()
 }
 
 /**
@@ -62,6 +41,19 @@ export const turnToGameScreen = () => {
   document.getElementById('login_screen').style.display = 'none'
   document.getElementById('game_screen').style.display = 'block'
   document.querySelector('canvas').style.display = 'block'
+
+  var newUser = new User('myID', 'MAIN', 'TEMP', [0, 0])
+  newUser.setSpriteImages('up', '../img/character/up.png')
+  newUser.setSpriteImages('down', '../img/character/down.png')
+  newUser.setSpriteImages('right', '../img/character/right.png')
+  newUser.setSpriteImages('left', '../img/character/left.png')
+
+  users['myID'] = newUser
+
+  adjustMapPosition()
+  document.getElementById('loading').style.display = 'none'
+  animate()
+  transferMapTo('BATTLE0')
 }
 
 export const logout = () => {
