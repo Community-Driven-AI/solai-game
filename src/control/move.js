@@ -154,21 +154,11 @@ export function moveToXDirection(direction, num = 1, passedTime) {
     y: deltaY,
   })
 
-  var distance = distancePowerofTwo(
-    fixedObjects['tower'].position,
-    player.position
-  )
-
-  if (distance < 50000) {
-    fixedObjects['tower'].msgs = [
-      'Training by Community...',
-      'Click Me For More Info',
-    ]
-    fixedObjects['tower'].clickable = true
-  } else {
-    fixedObjects['tower'].clickable = false
-    fixedObjects['tower'].msgs = ['Come Closer!']
-    fixedObjects['tower'].msg_index = 0
+  if (fixedObjects['tower'].msgs.length > 0) {
+    var distance = distancePowerofTwo(
+      fixedObjects['tower'].position,
+      player.position
+    )
   }
 
   // collision check

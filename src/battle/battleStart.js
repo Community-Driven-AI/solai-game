@@ -1,7 +1,7 @@
 import { canvas, stopAllPlay } from '../js/index'
 import { battle } from './battleClient'
 import { myID, users, player } from '../user/user'
-import { fixedObjects } from '../object/FixedObject'
+import { FixedObject, fixedObjects } from '../object/FixedObject'
 
 /**
  * check whether click another player to battle.
@@ -10,9 +10,7 @@ export function clickEvent() {
   canvas.addEventListener('click', (ev) => {
     for (const key in fixedObjects) {
       if (fixedObjects[key].checkClick(ev)) {
-        if (key === 'tower') {
-          document.getElementById('drop_modal').style.display = 'block'
-        }
+        fixedObjects[key].clickEvent()
       }
     }
   })

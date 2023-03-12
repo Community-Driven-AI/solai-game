@@ -63,7 +63,7 @@ export function transferMapTo(toMap) {
       break
 
     case MAP.BATTLE0:
-      newBackgroundImage.src = '../img/waitMap/1.png'
+      newBackgroundImage.src = '../img/waitMap/2.png'
 
       player.setPosition({ x: 1720, y: 850 }, true)
       break
@@ -104,5 +104,5 @@ export const showLoadingScreen = async () => {
   setTimeout(() => {
     document.querySelector('#loading_screen').style.display = 'none'
     document.querySelector('#loading_screen_gif').style.display = 'none'
-  }, 3000)
+  }, 1000)
 }

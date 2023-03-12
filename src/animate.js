@@ -23,18 +23,134 @@ const npcTalk = (animationId) => {
 var tower = new FixedObject(
   'tower',
   'BATTLE0',
-  'AI MODEL',
-  [1550, 1300],
+  'GLOBAL MODEL',
+  [1500, 1100],
   {
-    max: 12,
+    max: 17,
     hold: 30,
   },
-  ['Come Closer!'],
+  ['Global Model Predicting...', "Tommorow's SOL:", '+10%', 'Click me to Copy Me!']
 )
+tower.clickEvent = () => {
+  document.getElementById('download_modal').style.display = 'block'
+}
 var towerImage = new Image()
-towerImage.src = '../img/new_tower.png'
+towerImage.src = '../img/octopus.png'
 tower.sprite.setImage(towerImage)
+tower.clickable = true
 fixedObjects['tower'] = tower
+
+var buildArea = new FixedObject(
+  'buildArea',
+  'BATTLE0',
+  'BUILD AREA',
+  [1000, 1100],
+  {
+    max: 1,
+    hold: 30,
+  },
+  []
+)
+buildArea.clickEvent = () => {
+  var localModel = new FixedObject(
+    'localModel',
+    'BATTLE0',
+    'LOCAL MODEL',
+    [1100, 1150],
+    {
+      max: 17,
+      hold: 10,
+    },
+    []
+  )
+  buildArea.msgs = ["click the octopus to train!"]
+  localModel.clickEvent = () => {
+    document.getElementById('drop_modal').style.display = 'block'
+  }
+  var localModelImage = new Image()
+  localModelImage.src = '../img/octopus.png'
+  localModel.sprite.setImage(localModelImage)
+  localModel.sprite.setScale(0.7)
+  fixedObjects['localModel'] = localModel
+
+  fixedObjects['localModel'].clickable = true
+  fixedObjects['buildArea'].clickable = false
+  fixedObjects['buildArea'].msgs = []
+  player.dropItem()
+}
+var buildAreaImage = new Image()
+buildAreaImage.src = '../img/green_area.png'
+buildArea.sprite.setImage(buildAreaImage)
+fixedObjects['buildArea'] = buildArea
+
+var evaluateArea = new FixedObject(
+  'evaluateArea',
+  'BATTLE0',
+  'BUILD AREA',
+  [1800, 1000],
+  {
+    max: 1,
+    hold: 30,
+  },
+  []
+)
+evaluateArea.clickEvent = () => {}
+var evaluateAreaImage = new Image()
+evaluateAreaImage.src = '../img/blue_area.png'
+evaluateArea.sprite.setImage(evaluateAreaImage)
+fixedObjects['evaluateArea'] = evaluateArea
+
+var localModel1 = new FixedObject(
+  'localModel1',
+  'BATTLE0',
+  'LOCAL MODEL',
+  [1900, 1500],
+  {
+    max: 17,
+    hold: 10,
+  },
+  []
+)
+var localModelImage = new Image()
+localModelImage.src = '../img/octopus.png'
+localModel1.sprite.setImage(localModelImage)
+localModel1.sprite.setScale(0.7)
+fixedObjects['localModel1'] = localModel1
+
+var newUser = new User('player1', 'BATTLE0', 'User 1', [0, 0])
+newUser.setSpriteImages('up', '../img/character/up.png')
+newUser.setSpriteImages('down', '../img/character/down.png')
+newUser.setSpriteImages('right', '../img/character/right.png')
+newUser.setSpriteImages('left', '../img/character/left.png')
+
+users['player1'] = newUser
+users['player1'].setDirection('down')
+users['player1'].setPosition({ x: 2000, y: 1475 }, true)
+
+var localModel2 = new FixedObject(
+  'localModel2',
+  'BATTLE0',
+  'LOCAL MODEL',
+  [2100, 1250],
+  {
+    max: 17,
+    hold: 10,
+  },
+  []
+)
+localModel2.sprite.setImage(localModelImage)
+localModel2.sprite.setScale(0.7)
+fixedObjects['localModel2'] = localModel2
+
+var newUser = new User('player2', 'BATTLE0', 'User 2', [0, 0])
+newUser.setSpriteImages('up', '../img/character/up.png')
+newUser.setSpriteImages('down', '../img/character/down.png')
+newUser.setSpriteImages('right', '../img/character/right.png')
+newUser.setSpriteImages('left', '../img/character/left.png')
+
+users['player2'] = newUser
+users['player2'].setDirection('down')
+users['player2'].setPosition({ x: 2025, y: 1200 }, true)
 
 const canvas = document.querySelector('canvas')
 

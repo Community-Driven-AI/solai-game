@@ -15,6 +15,7 @@ export class FixedObject {
   msg
   showTime
   clickable
+  clickEvent
 
   constructor(id, map, name, coordinate, frames, msgs) {
     this.position = { x: coordinate[0], y: coordinate[1] }
@@ -47,26 +48,35 @@ export class FixedObject {
   }
 
   draw(passedTime) {
-    this.showTime += passedTime
-    if (this.showTime > 5 * 1000) {
-      this.showTime = 0
-      this.msg_index = (this.msg_index + 1) % this.msgs.length
-    }
     this.sprite.position = local_position(this.position)
 
-    canva.drawImage(
-      chatBubble,
-      this.sprite.position.x + this.sprite.width / 2 + 40,
-      this.sprite.position.y - 70,
-      200,
-      80
-    )
+    this.showTime += passedTime
+    if (this.msgs.length > 0) {
+      if (this.showTime > 3 * 1000) {
+        this.showTime = 0
+        this.msg_index = (this.msg_index + 1) % this.msgs.length
+      }
 
-    canva.fillText(
-      this.msgs[this.msg_index],
-      this.sprite.position.x + this.sprite.width / 2 + 140,
-      this.sprite.position.y - 39
-    )
+      canva.drawImage(
+        chatBubble,
+        this.sprite.position.x + this.sprite.width / 2 + 100,
+        this.sprite.position.y - 150,
+        400,
+        200
+      )
+
+      canva.font = '25px "210L"'
+      canva.fillStyle = 'red'
+
+      canva.fillText(
+        this.msgs[this.msg_index],
+        this.sprite.position.x + this.sprite.width / 2 + 260,
+        this.sprite.position.y - 80
+      )
+
+      canva.fillStyle = 'black'
+      canva.font = '15px "210L"'
+    }
 
     canva.fillText(
       this.name,

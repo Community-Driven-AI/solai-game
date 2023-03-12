@@ -67,7 +67,9 @@
         <div id="loading" class="loader"></div>
         <div id="overlappingDiv"></div>
 
-        <button id="chatOpenBtn" class="nes-btn">Chat</button>
+        <button id="chatOpenBtn" class="nes-btn" style="display: none">
+          Chat
+        </button>
         <div class="chat-popup" id="chatForm" style="display: none">
           <form class="form-container">
             <h2>Chat</h2>
@@ -97,19 +99,18 @@
           </form>
         </div>
         <div id="buttonSection">
-          <div class="game_button_container">
-          </div>
-          <div class="game_button_container">
+          <div class="game_button_container"></div>
+          <!-- <div class="game_button_container">
             <button
               class="custom_button_1"
-              id="profileBtn"
+              id="leaderboardBtn"
               type="button"
               class="nes-btn"
             >
-              My Profile
+              LeaderBoard
               <span class="bg" />
             </button>
-          </div>
+          </div> -->
           <div class="game_button_container">
             <button
               class="custom_button_1"
@@ -166,45 +167,88 @@
           <div class="guideButtons">
             <div class="guideBtn leftButton" value="1">1</div>
             <div class="guideBtn rightButton" value="2">2</div>
+            <div class="guideBtn rightButton" value="3">3</div>
+            <div class="guideBtn rightButton" value="4">4</div>
           </div>
           <div id="guideContainer" class="guideContainer">
             <div class="guide">
-              <h2>Game Guidance</h2>
-              <p>This is a multiplayer game.</p>
-              <p>
-                You can walk, chat and battle with other players within the
-                game.
-              </p>
-              <p>
-                Step into the same Battle Zone box with other player to enter
-                battle.
-              </p>
+              <h2>Demo Guidance</h2>
+              <p>This is a visual demo for SolAI Scheme</p>
+              <p>You can walk, and interact with the Octopus.</p>
+              <p>Move to Second Page!</p>
             </div>
             <div class="guide">
-              <h2>Skill Types</h2>
-              <p>Attack :</p>
-              <p>Defense :</p>
-              <p>Lucky :</p>
+              <h2>Control</h2>
+              <p>Move with keyboard 'w,a,s,d'</p>
+              <p>Read what Octopus is Speaking and Click Objects as guided!</p>
+            </div>
+            <div class="guide">
+              <h2>Training Task: Health Data → Solana Price</h2>
+              <p>Let's Train an Octopus that predicts Solana Price</p>
+              <p>
+                Octopus will use Solana Community's Health Data in prediction!
+              </p>
+              <p>Will the octopus able to learn and find something?</p>
+              <p>Let's Find Out!</p>
+            </div>
+            <div class="guide">
+              <h2>Prepare your Apple Health Data</h2>
+              <p>Export Data on Your Iphone!</p>
+              <p>The file name will be "export.zip"</p>
+              <p>Octopus will request to train with this Health Data</p>
+              <button id="closeGuidanceBtn">Close</button>
             </div>
           </div>
         </div>
 
         <!-- Battle Squence 1 : Choose fight or not -->
         <div id="battleCard" class="battle_modal"></div>
-        <div id="endTrainCard" class="battle_modal"><p>Train Done!</p></div>
+        <div id="endTrainCard" class="battle_modal">
+          <p>Train Done!</p>
+          <p>Received AI NFT...</p>
+        </div>
+        <div id="uploadingCard" class="battle_modal">
+          <p>Uploading...</p>
+        </div>
+        <div id="uploadDoneCard" class="battle_modal">
+          <p>Others can now evaluate this model!</p>
+        </div>
+        <div id="upload_model_modal" class="battle_modal">
+          <p>Commit Your Local Model Model</p>
+          <button id="uploadBtn" class="guideBtn">Upload & Commit</button>
+        </div>
+        <div id="download_modal" class="battle_modal">
+          <p>Download Latest Global Model</p>
+          <button id="downloadBtn" class="guideBtn">Download</button>
+        </div>
         <div id="drop_modal" class="battle_modal">
-          <p>
-            The Solana Community is building an AI Model using private Health
-            Data!
-          </p>
-          <p>Tower will be upgraded as the model improves.</p>
-          <p>-----------------------------------------></p>
-          <img src="./img/new_tower.png" />
+          <h2>
+            The Solana Community is building an AI Octopus predicting Tommorow's
+            Solana Price from Community Health Data!
+          </h2>
+          <p>You will be training your own local Octopus...</p>
+          <p>-------------------------------------------></p>
+          <img src="./img/octopus.png" />
           <p>Drag and Drop your Health Data file to this <i>drop zone</i>.</p>
-          <div id="drop_zone"></div>
+          <form id="drop_zone"></form>
+          <p></p>
           <button id="trainBtn" class="guideBtn">Train My Model</button>
           <button id="closeCardBtn" class="guideBtn">Close</button>
-          <p id="trainText" style="display: none">Training...</p>
+        </div>
+
+        <div id="evaluate_drop_modal" class="battle_modal">
+          <h2>
+            The Solana Community is building an AI Octopus predicting Tommorow's
+            Solana Price from Community Health Data!
+          </h2>
+          <p>You will be evaluating other's local Octopus...</p>
+          <p>-------------------------------------------></p>
+          <img src="./img/octopus.png" />
+          <p>Drag and Drop your Health Data file to this <i>drop zone</i>.</p>
+          <form id="evaluate_drop_zone"></form>
+          <p></p>
+          <button id="evaluateBtn" class="guideBtn">Evaluate This Model</button>
+          <button id="closeEvaluateCardBtn" class="guideBtn">Close</button>
         </div>
         <!-- Battle Squence 2 : Choose your skill -->
         <div id="skill_box_temp" class="battle_modal">
@@ -293,7 +337,7 @@
       <div
         id="login_screen"
         class="modal"
-        style="background-image: url('./img/main/background.jpg')"
+        style="background-image: url('./img/main/background.png')"
       >
         <div id="resumePopUp" class="card">
           <p>You have Resume Data. Resume from checkpoint?</p>

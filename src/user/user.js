@@ -85,6 +85,7 @@ export class User {
   moving
   chat
   chatShowTime
+  holdingItem
 
   constructor(id, map, name, coordinate) {
     if (id === myID) {
@@ -119,6 +120,7 @@ export class User {
     this.moving = false
     this.chat = ''
     this.chatShowTime = 0
+    this.holdingItem = new Image()
   }
 
   setSpriteImages(direction, imageSrc) {
@@ -137,6 +139,14 @@ export class User {
     } else {
       this.targetPosition = position
     }
+  }
+
+  holdItem(itemImageSrc) {
+    this.holdingItem.src = itemImageSrc
+  }
+
+  dropItem() {
+    this.holdingItem.src = ''
   }
 
   getNextBlock(delta) {
@@ -277,5 +287,17 @@ export class User {
     }
 
     this.sprite.draw()
+
+    // holding item draw
+    if (
+      this.holdingItem.naturalHeight !== 0 &&
+      this.holdingItem.naturalWidth !== 0
+    ) {
+      canva.drawImage(
+        this.holdingItem,
+        this.sprite.position.x + 50,
+        this.sprite.position.y
+      )
+    }
   }
 }

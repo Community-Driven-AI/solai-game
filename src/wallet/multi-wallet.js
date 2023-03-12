@@ -1,4 +1,5 @@
 import { NearWallet } from './near-wallet'
+import { SolanaWallet } from './solana-wallet'
 import { PolygonWallet } from './polygon-wallet'
 import { TerraWallet } from './terra-wallet'
 
@@ -16,7 +17,6 @@ class MultiWallet {
 
   startUp() {
     document.querySelector('#start_login_button').removeAttribute('disabled')
-    document.querySelector('#enterBtn').style.display = 'block'
 
     // this.wallets['NEAR'].startUp()
   }
@@ -27,6 +27,7 @@ class MultiWallet {
   }
 
   signIn() {
+    this.wallets['SOLANA'] = new SolanaWallet()
     if (this.getAccountId() !== undefined)
       document.getElementById('loggedInWith').innerText = this.getAccountId()
     document.getElementById('connect_modal_box').style.display = 'flex'

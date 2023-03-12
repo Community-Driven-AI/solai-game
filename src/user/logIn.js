@@ -30,7 +30,6 @@ export function setClothId(id) {
 }
 
 export const login = async () => {
-  document.getElementById('chatOpenBtn').style.display = 'block'
   turnToGameScreen()
 }
 
@@ -42,7 +41,7 @@ export const turnToGameScreen = () => {
   document.getElementById('game_screen').style.display = 'block'
   document.querySelector('canvas').style.display = 'block'
 
-  var newUser = new User('myID', 'MAIN', 'TEMP', [0, 0])
+  var newUser = new User('myID', 'MAIN', 'ME!', [0, 0])
   newUser.setSpriteImages('up', '../img/character/up.png')
   newUser.setSpriteImages('down', '../img/character/down.png')
   newUser.setSpriteImages('right', '../img/character/right.png')
@@ -52,6 +51,7 @@ export const turnToGameScreen = () => {
 
   adjustMapPosition()
   document.getElementById('loading').style.display = 'none'
+  document.getElementById('guidanceCard').style.display = 'block'
   animate()
   transferMapTo('BATTLE0')
 }
