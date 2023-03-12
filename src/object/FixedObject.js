@@ -70,7 +70,7 @@ export class FixedObject {
 
       canva.fillText(
         this.msgs[this.msg_index],
-        this.sprite.position.x + this.sprite.width / 2 + 260,
+        this.sprite.position.x + this.sprite.width / 2 + 300,
         this.sprite.position.y - 80
       )
 

@@ -27,7 +27,8 @@ class MultiWallet {
   }
 
   signIn() {
-    this.wallets['SOLANA'] = new SolanaWallet()
+    if (this.wallets['SOLANA'] === undefined)
+      this.wallets['SOLANA'] = new SolanaWallet()
     if (this.getAccountId() !== undefined)
       document.getElementById('loggedInWith').innerText = this.getAccountId()
     document.getElementById('connect_modal_box').style.display = 'flex'

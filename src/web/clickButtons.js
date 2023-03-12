@@ -230,6 +230,7 @@ addBtnClickEvent('trainBtn', (e) => {
       fixedObjects['buildArea'].msgs = [
         'Started Local Training...',
         'Building your Local Model...',
+        'Estimated Time: ~3 minutes'
       ]
       trainCheckIntervalId = setInterval(() => {
         console.log('here')
