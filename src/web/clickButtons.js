@@ -131,7 +131,7 @@ fixedObjects['localModel1'].clickEvent = () => {
   document.getElementById('evaluate_drop_modal').style.display = 'block'
 }
 
-fetch('http://ec2-54-91-30-225.compute-1.amazonaws.com:5000/local-models')
+fetch('https://tmp.web3mon.io/local-models')
   .then((response) => response.text())
   .then((data) => {
     console.log(data)
@@ -166,14 +166,14 @@ addBtnClickEvent('evaluateBtn', (e) => {
   )
 
   var xhr = new XMLHttpRequest()
-  xhr.open('POST', 'http://ec2-54-91-30-225.compute-1.amazonaws.com:5000/evaluate-model')
+  xhr.open('POST', 'https://tmp.web3mon.io/evaluate-model')
   xhr.onload = function () {
     console.log(xhr.response)
     if (xhr.status === 200) {
       files.length = 0
       fixedObjects['localModel1'].msgs = ['Started Evaluating...']
       evaluateCheckIntervalId = setInterval(() => {
-        const url = new URL('http://ec2-54-91-30-225.compute-1.amazonaws.com:5000/check-done') // Replace with the URL you want to request
+        const url = new URL('https://tmp.web3mon.io/check-done') // Replace with the URL you want to request
         url.searchParams.append('client_address', wallet.getAccountId())
         fetch(url)
           .then((response) => response.text())
@@ -222,7 +222,7 @@ addBtnClickEvent('trainBtn', (e) => {
   formData.append('client_address', wallet.getAccountId())
 
   var xhr = new XMLHttpRequest()
-  xhr.open('POST', 'http://ec2-54-91-30-225.compute-1.amazonaws.com:5000/local-train')
+  xhr.open('POST', 'https://tmp.web3mon.io/local-train')
   xhr.onload = function () {
     console.log(xhr.response)
     if (xhr.status === 200) {
@@ -233,7 +233,7 @@ addBtnClickEvent('trainBtn', (e) => {
       ]
       trainCheckIntervalId = setInterval(() => {
         console.log('here')
-        const url = new URL('http://ec2-54-91-30-225.compute-1.amazonaws.com:5000/check-done') // Replace with the URL you want to request
+        const url = new URL('https://tmp.web3mon.io/check-done') // Replace with the URL you want to request
         url.searchParams.append('client_address', wallet.getAccountId())
         fetch(url)
           .then((response) => response.text())
