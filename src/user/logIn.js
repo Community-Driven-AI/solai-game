@@ -1,5 +1,4 @@
 import { wallet } from '../wallet/multi-wallet'
-import { connect } from '../network/websocket'
 import { User, users } from './user'
 import { adjustMapPosition, transferMapTo } from '../control/map'
 import { animate } from '../animate'
@@ -8,13 +7,6 @@ export let playerUrl
 export let tokenId
 export let selectedClothId
 export let collection
-
-function truncate(input, length) {
-  if (input.length > length) {
-    return input.substring(0, length) + '...'
-  }
-  return input
-}
 
 export function setNFTInfo(nft_collection, nft_tokenId) {
   tokenId = nft_tokenId

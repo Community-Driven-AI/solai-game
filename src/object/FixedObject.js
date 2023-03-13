@@ -1,5 +1,6 @@
 import { Sprite } from './Sprite'
-import { canva, local_position } from '../js/index'
+import { canva } from '../js/index'
+import { local_position } from '../control/map'
 
 const chatBubble = new Image()
 chatBubble.src = './../img/chatBubble.png'

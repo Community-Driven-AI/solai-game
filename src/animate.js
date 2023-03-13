@@ -1,13 +1,9 @@
 import { joyToKey } from './control/move'
 import { stopAllPlay } from './js/index'
 import { keys, lastKey } from './control/move'
-import { sendPosition } from './control/move'
 import { moveToXDirection } from './control/move'
-import { battle } from './battle/battleClient'
 import { player, User, users } from './user/user'
 import { background, foreground } from './control/map'
-import { setRenderables, setMovables, renderables } from './js/renderables'
-import { Sprite } from './object/Sprite'
 import { FixedObject, fixedObjects } from './object/FixedObject'
 
 export const npcId = '250'
@@ -29,7 +25,12 @@ var tower = new FixedObject(
     max: 17,
     hold: 30,
   },
-  ['Global Model Predicting...', "Tommorow's SOL:", '+10%', 'Click me to Copy Me!']
+  [
+    'Global Model Predicting...',
+    "Tommorow's SOL:",
+    '+10%',
+    'Click me to Copy Me!',
+  ]
 )
 tower.clickEvent = () => {
   document.getElementById('download_modal').style.display = 'block'
@@ -63,7 +64,7 @@ buildArea.clickEvent = () => {
     },
     []
   )
-  buildArea.msgs = ["click the octopus to train!"]
+  buildArea.msgs = ['click the octopus to train!']
   localModel.clickEvent = () => {
     document.getElementById('drop_modal').style.display = 'block'
   }
@@ -154,6 +155,14 @@ users['player2'].setPosition({ x: 2025, y: 1200 }, true)
 
 const canvas = document.querySelector('canvas')
 
+canvas.addEventListener('click', (ev) => {
+  for (const key in fixedObjects) {
+    if (fixedObjects[key].checkClick(ev)) {
+      fixedObjects[key].clickEvent()
+    }
+  }
+})
+
 export const animate = () => {
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
@@ -167,8 +176,6 @@ export const animate = () => {
   npcTalk(animationId)
 
   joyToKey()
-
-  if (battle.started) return
 
   // 만약 채팅 중이라면 움직이지 않는다.
   if (document.getElementById('chatForm').style.display !== 'none') return

@@ -1,9 +1,5 @@
 import { Sprite } from '../object/Sprite'
-import { ws } from '../network/websocket'
-import { characters, local_position } from '../js/index'
 import { player, users } from '../user/user'
-import { setMovables, setRenderables } from '../js/renderables'
-import { wallet } from '../wallet/multi-wallet'
 
 const mainBackgroundImage = new Image()
 mainBackgroundImage.src = '../img/Island.png'
@@ -21,7 +17,7 @@ const MAP = {
   BATTLE5: 'BATTLE5',
   BATTLE6: 'BATTLE6',
 }
-
+console.log('MAP')
 export let background = new Sprite({
   position: {
     x: 0,
@@ -37,6 +33,13 @@ export let foreground = new Sprite({
   },
 })
 foreground.setImage(foregroundImage)
+
+export function local_position(position) {
+    return {
+      x: position.x + background.position.x,
+      y: position.y + background.position.y,
+    }
+  }
 
 export function adjustMapPosition() {
   var playerLocalPosition = local_position(player.position)
@@ -56,7 +59,6 @@ export function transferMapTo(toMap) {
   showLoadingScreen()
   switch (toMap) {
     case MAP.MAIN:
-
       newBackgroundImage.src = '../img/Island.png'
 
       player.setPosition({ x: 1500, y: 350 }, true)

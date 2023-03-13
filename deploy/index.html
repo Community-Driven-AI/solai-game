@@ -163,49 +163,26 @@
           <button id="parasUrl" class="nes-btn is-primary">see on paras</button>
         </div>
 
-        <div id="guidanceCard" class="guideCard" style="display: none">
-          <div class="guideButtons">
-            <div class="guideBtn leftButton" value="1">1</div>
-            <div class="guideBtn rightButton" value="2">2</div>
-            <div class="guideBtn rightButton" value="3">3</div>
-            <div class="guideBtn rightButton" value="4">4</div>
-          </div>
-          <div id="guideContainer" class="guideContainer">
-            <div class="guide">
-              <h2>Demo Guidance</h2>
-              <p>This is a visual demo for SolAI Scheme</p>
-              <p>You can walk, and interact with the Octopus.</p>
-              <p>Move to Second Page!</p>
-            </div>
-            <div class="guide">
-              <h2>Control</h2>
-              <p>Move with keyboard 'w,a,s,d'</p>
-              <p>Read what Octopus is Speaking and Click Objects as guided!</p>
-            </div>
-            <div class="guide">
-              <h2>Training Task: Health Data → Solana Price</h2>
-              <p>Let's Train an Octopus that predicts Solana Price</p>
-              <p>
-                Octopus will use Solana Community's Health Data in prediction!
-              </p>
-              <p>Will the octopus able to learn and find something?</p>
-              <p>Let's Find Out!</p>
-            </div>
-            <div class="guide">
-              <h2>Prepare your Apple Health Data</h2>
-              <p>Export Data on Your Iphone!</p>
-              <p>The file name will be "export.zip"</p>
-              <p>Octopus will request to train with this Health Data</p>
-              <button id="closeGuidanceBtn">Close</button>
-            </div>
-          </div>
-        </div>
+        <div
+          id="guidanceCard"
+          class="multiPageDialog"
+          style="display: none"
+        ></div>
+
+        <div
+          id="waitingCard"
+          class="multiPageDialog"
+          style="display: none"
+        ></div>
 
         <!-- Battle Squence 1 : Choose fight or not -->
         <div id="battleCard" class="battle_modal"></div>
         <div id="endTrainCard" class="battle_modal">
           <p>Train Done!</p>
           <p>Received AI NFT...</p>
+        </div>
+        <div id="alreadyDoingTaskCard" class="battle_modal">
+          <p>Please do One Task at Once</p>
         </div>
         <div id="uploadingCard" class="battle_modal">
           <p>Uploading...</p>

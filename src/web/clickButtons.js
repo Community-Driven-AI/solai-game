@@ -1,6 +1,4 @@
 import { login } from '../user/logIn'
-import * as nearAPI from 'near-api-js'
-import { findMyNFT } from '../user/findNFT'
 import { wallet } from '../wallet/multi-wallet'
 import { player } from '../user/user'
 import { FixedObject, fixedObjects } from '../object/FixedObject'
@@ -131,20 +129,6 @@ fixedObjects['localModel1'].clickEvent = () => {
   document.getElementById('evaluate_drop_modal').style.display = 'block'
 }
 
-fetch('https://tmp.web3mon.io/local-models')
-  .then((response) => response.text())
-  .then((data) => {
-    console.log(data)
-  })
-  .catch((error) => {
-    // Handle any errors here
-    console.error(error)
-  })
-
-addBtnClickEvent('closeGuidanceBtn', (e) => {
-  document.getElementById('guidanceCard').style.display = 'none'
-})
-
 // document.getElementById('drop_modal').style.display = 'block'
 let evaluateCheckIntervalId
 addBtnClickEvent('evaluateBtn', (e) => {
@@ -160,16 +144,19 @@ addBtnClickEvent('evaluateBtn', (e) => {
   var formData = new FormData()
   formData.append('file', file)
   formData.append('client_address', wallet.getAccountId())
-  formData.append(
-    'hash_value',
-    'c11c7c5f1becb2254ad5abde8f77cbe5d76a9efc766fed584b30fd029b1665a1'
-  )
 
   var xhr = new XMLHttpRequest()
   xhr.open('POST', 'https://tmp.web3mon.io/evaluate-model')
   xhr.onload = function () {
     console.log(xhr.response)
     if (xhr.status === 200) {
+      if (xhr.response === 'Already Doing Task') {
+        document.getElementById('alreadyDoingTaskCard').style.display = 'block'
+        setTimeout(() => {
+          document.getElementById('alreadyDoingTaskCard').style.display = 'none'
+        }, 5 * 1000)
+        return
+      }
       files.length = 0
       fixedObjects['localModel1'].msgs = ['Started Evaluating...']
       evaluateCheckIntervalId = setInterval(() => {
@@ -224,13 +211,22 @@ addBtnClickEvent('trainBtn', (e) => {
   var xhr = new XMLHttpRequest()
   xhr.open('POST', 'https://tmp.web3mon.io/local-train')
   xhr.onload = function () {
+    files.length = 0
+
     console.log(xhr.response)
     if (xhr.status === 200) {
-      files.length = 0
+      if (xhr.response === 'Already Doing Task') {
+        document.getElementById('alreadyDoingTaskCard').style.display = 'block'
+        setTimeout(() => {
+          document.getElementById('alreadyDoingTaskCard').style.display = 'none'
+        }, 5 * 1000)
+        return
+      }
+      document.getElementById('waitingCard').style.display = 'block'
       fixedObjects['buildArea'].msgs = [
         'Started Local Training...',
         'Building your Local Model...',
-        'Estimated Time: ~3 minutes'
+        'Estimated Time: ~3 minutes',
       ]
       trainCheckIntervalId = setInterval(() => {
         console.log('here')
@@ -302,11 +298,3 @@ addBtnClickEvent('trainBtn', (e) => {
   }
   xhr.send(formData)
 })
-
-const guideBtns = document.getElementsByClassName('guideBtn')
-for (let i = 0; i < guideBtns.length; i++) {
-  guideBtns.item(i).addEventListener('click', (e) => {
-    const ee = document.getElementById('guideContainer')
-    ee.scrollTop = 360 * i
-  })
-}

@@ -1,5 +1,4 @@
 import { JoyStick } from './joystick'
-import { ws } from '../network/websocket'
 import { adjustMapPosition, background, transferMapTo } from './map'
 import {
   checkForCharacterCollision,
@@ -107,32 +106,6 @@ const lastSentPosition = {
 
 function distancePowerofTwo(a, b) {
   return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2)
-}
-
-export function sendPosition(position) {
-  var delta = distancePowerofTwo(lastSentPosition, position)
-  // 50 이상 차이나면 무조건 전송
-  // 버튼 안 눌렀으면 0 이상 차이나면 전송
-  // 버튼 안 눌렀는데 0 인데 움직이고 있었으면 멈춤
-  if (delta > 50) {
-    moveUser(position)
-    lastSentPosition.x = position.x
-    lastSentPosition.y = position.y
-  }
-}
-
-function moveUser(position) {
-  const body = {
-    Move: {
-      coordinate: [position.x, position.y],
-    },
-  }
-
-  lastSentPosition.x = position.x
-  lastSentPosition.y = position.y
-
-  const msg = JSON.stringify(body)
-  ws.send(msg)
 }
 
 const speed = 0.3

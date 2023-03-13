@@ -240,7 +240,7 @@ canvas {
   color: rgba(242, 242, 242, 0.93);
 }
 
-.guideCard {
+.multiPageDialog {
   color: #111111;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: auto;
@@ -266,7 +266,7 @@ canvas {
   border: 1px solid rgba(23, 23, 23, 0.67);
   color: rgba(242, 242, 242, 0.93);
 
-  .guideContainer {
+  .contentContainer {
     float: left;
     overflow: scroll;
     width: 500px;
@@ -274,7 +274,7 @@ canvas {
     transition: 0.8s all ease;
   }
 
-  .guide {
+  .page {
     width: 460px;
     height: 350px;
     margin: 0px 0px;
@@ -286,10 +286,10 @@ canvas {
   }
 }
 
-.guideButtons {
+.buttonContainer {
   display: flex;
   flex-direction: row;
-  .guideBtn {
+  .pageBtn {
     margin-right: 10px;
     background-color: rgba(0, 0, 0, 0.3);
     width: 45px;

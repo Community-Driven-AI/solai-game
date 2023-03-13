@@ -1,15 +1,6 @@
 import { Sprite } from '../object/Sprite'
-import { canva, local_position, setRenderables } from '../js/index'
-import { selectedClothId, playerUrl } from './logIn'
-import { animate } from '../animate'
-import { adjustMapPosition, background, foreground } from '../control/map'
-import { battle } from '../battle/battleClient'
-import { safe_send } from '../network/websocket'
-import axios from 'axios'
-
-const clothStorageLink = 'https://web3mon.s3.amazonaws.com/nftv1/'
-
-export const worker = new Worker('./worker.js')
+import { canva } from '../js/index'
+import { local_position } from '../control/map'
 
 const chatBubble = new Image()
 chatBubble.src = './../img/chatBubble.png'
@@ -35,43 +26,6 @@ const READYTEXT = 'Ready for Battle'
 
 export function setMyID(id) {
   myID = id
-}
-
-worker.onmessage = function (event) {
-  if (event.data === undefined) return
-
-  var user_id = event.data.id
-  if (!(user_id in users)) return
-
-  users[user_id].setSpriteImages('up', event.data.up)
-  users[user_id].setSpriteImages('down', event.data.down)
-  users[user_id].setSpriteImages('left', event.data.left)
-  users[user_id].setSpriteImages('right', event.data.right)
-  users[user_id].setSpriteImages('base', event.data.base)
-  users[user_id].setDirection('down')
-
-  var resume_data = sessionStorage.getItem('resume-data')
-  if (resume_data !== null) {
-    resume_data = JSON.parse(resume_data)
-    var opponent_id = resume_data.battle_data.opponent_id
-    if (event.data.id === myID || event.data.id === opponent_id)
-      if (myID in users && opponent_id in users) {
-        if (users[myID].made && users[opponent_id].made) {
-          document.getElementById('loading').style.display = 'none'
-          animate()
-          battle.resume(resume_data.battle_data)
-        }
-      }
-  } else {
-    if (event.data.id === myID) {
-      adjustMapPosition()
-      document.getElementById('loading').style.display = 'none'
-      animate()
-    }
-  }
-}
-worker.onerror = function (err) {
-  console.log(err)
 }
 
 export class User {
@@ -163,23 +117,6 @@ export class User {
   setMoving(moving) {
     this.moving = moving
     this.sprite.animate = moving
-  }
-
-  changeBattleReadyState() {
-    this.readyForBattle = !this.readyForBattle
-    if (this.readyForBattle) {
-      safe_send({
-        ReadyBattle: {
-          meaningless: 0,
-        },
-      })
-    } else {
-      safe_send({
-        UnreadyBattle: {
-          meaningless: 0,
-        },
-      })
-    }
   }
 
   draw(passedTime) {
