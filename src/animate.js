@@ -28,7 +28,7 @@ var tower = new FixedObject(
   [
     'Global Model Predicting...',
     "Tommorow's SOL:",
-    '+10%',
+    '+?%',
     'Click me to Copy Me!',
   ]
 )
