@@ -101,6 +101,10 @@ addBtnClickEvent('closeCardBtn', (e) => {
   document.getElementById('drop_modal').style.display = 'none'
 })
 
+addBtnClickEvent('closeEvaluateCardBtn', (e) => {
+  document.getElementById('evaluate_drop_modal').style.display = 'none'
+})
+
 addBtnClickEvent('uploadBtn', (e) => {
   document.getElementById('upload_model_modal').style.display = 'none'
   document.getElementById('uploadingCard').style.display = 'block'
@@ -151,32 +155,37 @@ addBtnClickEvent('evaluateBtn', (e) => {
     console.log(xhr.response)
     if (xhr.status === 200) {
       if (xhr.response === 'Already Doing Task') {
-        document.getElementById('alreadyDoingTaskCard').style.display = 'block'
-        setTimeout(() => {
-          document.getElementById('alreadyDoingTaskCard').style.display = 'none'
-        }, 5 * 1000)
+        window.alert('Already Doing Task')
+        location.reload()
         return
       }
       files.length = 0
       fixedObjects['localModel1'].msgs = ['Started Evaluating...']
+      fixedObjects['localModel1'].clickable = false
+      fixedObjects['localModel1'].sprite.animate = true
       evaluateCheckIntervalId = setInterval(() => {
         const url = new URL('https://tmp.web3mon.io/check-done') // Replace with the URL you want to request
         url.searchParams.append('client_address', wallet.getAccountId())
         fetch(url)
           .then((response) => response.text())
           .then((data) => {
-            if (data !== 'false') {
+            if (data === 'success') {
+              window.alert('Evlauation Success!')
               fixedObjects['localModel1'].msgs = ['Evaluation Done!']
               clearInterval(evaluateCheckIntervalId)
               fixedObjects['localModel1'].clickable = true
+              fixedObjects['localModel1'].sprite.animate = false
               fixedObjects['localModel1'].clickEvent = () => {
-                document.getElementById('endTrainCard').style.display = 'block'
+                document.getElementById('endEvaluateCard').style.display = 'block'
                 setTimeout(() => {
-                  document.getElementById('endTrainCard').style.display = 'none'
+                  document.getElementById('endEvaluateCard').style.display = 'none'
                 }, 5 * 1000)
               }
               // Handle the response here
               console.log(data)
+            }
+            else if (data === 'failed') {
+              document.getElementById('errorCard').style.display = 'block'
             }
           })
           .catch((error) => {
@@ -216,10 +225,8 @@ addBtnClickEvent('trainBtn', (e) => {
     console.log(xhr.response)
     if (xhr.status === 200) {
       if (xhr.response === 'Already Doing Task') {
-        document.getElementById('alreadyDoingTaskCard').style.display = 'block'
-        setTimeout(() => {
-          document.getElementById('alreadyDoingTaskCard').style.display = 'none'
-        }, 5 * 1000)
+        window.alert('Already Doing Task')
+        location.reload()
         return
       }
       document.getElementById('waitingCard').style.display = 'block'
@@ -235,7 +242,7 @@ addBtnClickEvent('trainBtn', (e) => {
         fetch(url)
           .then((response) => response.text())
           .then((data) => {
-            if (data !== 'false') {
+            if (data === 'success') {
               fixedObjects['buildArea'].msgs = [
                 'Local Training Done!',
                 'Click to Receive Local Model',
@@ -244,7 +251,6 @@ addBtnClickEvent('trainBtn', (e) => {
               fixedObjects['localModel'].sprite.animate = false
               fixedObjects['localModel'].clickable = true
               fixedObjects['localModel'].clickEvent = () => {
-                fixedObjects['tower'].clickable = true
                 player.holdItem('../img/single_octopus.png')
                 delete fixedObjects['localModel']
                 fixedObjects['buildArea'].msgs = [
@@ -284,8 +290,10 @@ addBtnClickEvent('trainBtn', (e) => {
                 document.getElementById('endTrainCard').style.display = 'none'
               }, 5 * 1000)
             }
-            // Handle the response here
-            console.log(data)
+            if (data === 'failed') {
+              window.alert('wrong Data Format')
+              location.reload()
+            }
           })
           .catch((error) => {
             // Handle any errors here

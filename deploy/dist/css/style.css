@@ -950,7 +950,13 @@ img {
 #endTrainCard {
   width: 200px;
   height: 100px;
-  left: calc(50% - 150px);
+  left: calc(50% - 100px);
+}
+
+#endEvaluationCard {
+  width: 200px;
+  height: 100px;
+  left: calc(50% - 100px);
 }
 
 .battleCard {
